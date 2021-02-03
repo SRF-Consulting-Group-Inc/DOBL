@@ -14,7 +14,7 @@ namespace WebApplication1
         protected void Page_Load(object sender, EventArgs e)
         {
             string project = SearchBox.Text;
-            if (!project.Contains("-") && project.Length >= 8) { project = project.Substring(0, 4) + '-' + project.Substring(3, 2) + '-' + project.Substring(5, 2); }
+            if (!project.Contains("-") && project.Length >= 8) { project = project.Substring(0, 4) + '-' + project.Substring(4, 2) + '-' + project.Substring(6, 2); }
             Load_graph(project);
             Load_last_updated(project);
             CurrentUser.Value = Context.User.Identity.Name.Substring(0, Context.User.Identity.Name.IndexOf('@'));
@@ -49,13 +49,13 @@ namespace WebApplication1
         protected void submit_Click(object sender, EventArgs e)
         {
             string project = SearchBox.Text;
-            if (!project.Contains("-") && project.Length >= 8) { project = project.Substring(0, 4) + '-' + project.Substring(3, 2) + '-' + project.Substring(5, 2); }
+            if (!project.Contains("-") && project.Length >= 8) { project = project.Substring(0, 4) + '-' + project.Substring(4, 2) + '-' + project.Substring(6, 2); }
             for (int i = 0; i < GridView1.Rows.Count; i++)
             {
                 GridView1.UpdateRow(i, false);
-                Load_graph(project);
-                Load_last_updated(project);
             }
+            Load_graph(project);
+            Load_last_updated(project);
         }
 
         protected void Load_graph(string project)
@@ -80,8 +80,9 @@ namespace WebApplication1
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             string project = SearchBox.Text;
-            if (!project.Contains("-") && project.Length >= 8) { project = project.Substring(0, 4) + '-' + project.Substring(3, 2) + '-' + project.Substring(5, 2); }
+            if (!project.Contains("-") && project.Length >= 8) { project = project.Substring(0, 4) + '-' + project.Substring(4, 2) + '-' + project.Substring(6, 2); }
             Load_graph(project);
+            Load_last_updated(project);
         }
     }
 }
