@@ -73,6 +73,16 @@ namespace WebApplication1
                 PredictionData.Value = DR1.GetValue(3).ToString();
                 Timeline.Value = DR1.GetValue(4).ToString();
                 ProjectBudget.Value = DR1.GetValue(5).ToString();
+                Warning.Text = "";
+            }
+            else
+            {
+                spentData.Value = "";
+                DDCIData.Value = "";
+                PredictionData.Value = "";
+                Timeline.Value = "";
+                ProjectBudget.Value = "";
+                Warning.Text = "Project Not Found";
             }
             Conn.Close();
         }

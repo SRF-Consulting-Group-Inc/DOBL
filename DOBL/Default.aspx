@@ -93,6 +93,16 @@
             .flex-child:first-child {
                 margin-right: 20px;
             }
+
+        .warning-container {
+            text-align: center;
+        }
+        .warning {
+            display: inline-block;
+            margin: auto;
+            color: orangered;
+            font-size: large;
+        }
     </style>
 
     <div id="mySidenav" class="sidenav">
@@ -110,8 +120,12 @@
         <asp:Label ID="Label2" runat="server" Text="Search by project number: "></asp:Label>
         <asp:TextBox ID="SearchBox" ClientIDMode="Static" runat="server" AutoPostBack="true" CssClass="short" ToolTip="Type Project number with or without dashes here and click search. Delete Project number to go back to full list"></asp:TextBox>
         <asp:Button ID="btnSearch" ClientIDMode="Static" runat="server" Text="Search" CausesValidation="false" OnClick="btnSearch_Click" />
-        <br /><br />
-        <asp:GridView ID="HeaderGridView" runat="server" DataSourceID="ProjHeader" CellPadding="5" Style="margin:auto">
+        <br />
+        <br />
+        <div class="warning-container">
+        <asp:Label ID="Warning" CssClass="warning" runat="server" Text=""></asp:Label>
+        </div>
+        <asp:GridView ID="HeaderGridView" runat="server" DataSourceID="ProjHeader" CellPadding="5" Style="margin: auto">
             <Columns>
                 <%-- <asp:BoundField DataField="Budget" HeaderText="Budget" ReadOnly="True" SortExpression="Budget"></asp:BoundField>
                         <asp:BoundField DataField="Manager" HeaderText="Manager" ReadOnly="True" SortExpression="Manager"></asp:BoundField>
@@ -122,7 +136,8 @@
                         <asp:BoundField DataField="WorkType" HeaderText="WorkType" ReadOnly="True" SortExpression="WorkType"></asp:BoundField>--%>
             </Columns>
         </asp:GridView>
-        <br /><br />
+        <br />
+        <br />
         <div>
             <div id="container" style="height: 400px"></div>
             <div id="drag"></div>
