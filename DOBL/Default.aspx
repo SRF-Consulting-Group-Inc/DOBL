@@ -265,7 +265,7 @@
             </asp:SqlDataSource>
             <asp:SqlDataSource runat="server" ID="ProjHeader"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
-                SelectCommand="SELECT distinct LEFT(FORMAT([budget],'C','en-us'),LEN(FORMAT([budget],'C','en-us')) -3) as [Budget],[MGR_PPROJ_PTCP_NM] as [Manager],[PROJ_SUPR_NM] as [Supervisor],FORMAT([pproj_antd_pse_dt],'MM/dd/yyyy') as [PS&E Date],FORMAT([LET_DT],'MM/dd/yyyy') as [LET Date],[region] as [Region],[worktype] as [WorkType] FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                SelectCommand="SELECT distinct LEFT(FORMAT([budget],'C','en-us'),LEN(FORMAT([budget],'C','en-us')) -3) as [Budget],[MGR_PPROJ_PTCP_NM] as [Project Manager],[PROJ_SUPR_NM] as [Project Supervisor],FORMAT([pproj_antd_pse_dt],'MM/dd/yyyy') as [PS&E Date],FORMAT([LET_DT],'MM/dd/yyyy') as [LET Date],[region] as [Responsible Region],[worktype] as [WorkType] FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
