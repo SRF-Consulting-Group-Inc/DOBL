@@ -122,11 +122,10 @@
         <asp:TextBox ID="SearchBox" ClientIDMode="Static" runat="server" AutoPostBack="true" CssClass="short" ToolTip="Type Project number with or without dashes here and click search. Delete Project number to go back to full list"></asp:TextBox>
         <asp:Button ID="btnSearch" ClientIDMode="Static" runat="server" Text="Search" CausesValidation="false" OnClick="btnSearch_Click" />
         <br />
-        <br />
         <div class="warning-container">
             <asp:Label ID="Warning" CssClass="warning" runat="server" Text=""></asp:Label>
         </div>
-        <asp:GridView ID="HeaderGridView" runat="server" DataSourceID="ProjHeader" CellPadding="5" Style="margin: auto">
+        <asp:GridView ID="HeaderGridView" runat="server" DataSourceID="ProjHeader" CellPadding="4" Style="margin: auto">
             <Columns>
                 <%-- <asp:BoundField DataField="Budget" HeaderText="Budget" ReadOnly="True" SortExpression="Budget"></asp:BoundField>
                         <asp:BoundField DataField="Manager" HeaderText="Manager" ReadOnly="True" SortExpression="Manager"></asp:BoundField>
@@ -137,6 +136,7 @@
                         <asp:BoundField DataField="WorkType" HeaderText="WorkType" ReadOnly="True" SortExpression="WorkType"></asp:BoundField>--%>
             </Columns>
         </asp:GridView>
+        <asp:GridView ID="SubheaderGridView" runat="server" DataSourceID="SubProjHeader" CellPadding="4" Style="margin: auto" />
         <br />
         <br />
         <div>
@@ -271,6 +271,13 @@
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
             </asp:SqlDataSource>
+            <asp:SqlDataSource runat="server" ID="SubProjHeader"
+                ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
+                SelectCommand="SELECT distinct PPROJ_FOST_TXT as FOST, PPROJ_FOSL_TXT as FOSL, PPROJ_RTNM_TXT as RTNM FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                <SelectParameters>
+                    <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
+                </SelectParameters>
+            </asp:SqlDataSource>
         </div>
     </div>
     <asp:HiddenField ID="spentData" ClientIDMode="Static" runat="server" Value="" />
@@ -348,14 +355,18 @@
 
             xAxis: {
                 plotLines: [{
-                    color: '#5B6666',
+                    color: '#C8C8C8',
                     width: 2,
                     value: $('#PSEPosition').val(),
                     label: {
                         text: 'Controlling PS&E',
                         verticalAlign: 'top',
                         textAlign: 'left',
-                        rotation: 0
+                        rotation: 0,
+                        style: {
+                            color: '#C8C8C8',
+                            fontWeight: 'bold'
+                        }
                     }
                 }],
                 categories: $('#Timeline').val().split(",")
