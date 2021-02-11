@@ -97,6 +97,7 @@
         .warning-container {
             text-align: center;
         }
+
         .warning {
             display: inline-block;
             margin: auto;
@@ -123,7 +124,7 @@
         <br />
         <br />
         <div class="warning-container">
-        <asp:Label ID="Warning" CssClass="warning" runat="server" Text=""></asp:Label>
+            <asp:Label ID="Warning" CssClass="warning" runat="server" Text=""></asp:Label>
         </div>
         <asp:GridView ID="HeaderGridView" runat="server" DataSourceID="ProjHeader" CellPadding="5" Style="margin: auto">
             <Columns>
@@ -265,7 +266,7 @@
             </asp:SqlDataSource>
             <asp:SqlDataSource runat="server" ID="ProjHeader"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
-                SelectCommand="SELECT distinct LEFT(FORMAT([budget],'C','en-us'),LEN(FORMAT([budget],'C','en-us')) -3) as [Budget],[MGR_PPROJ_PTCP_NM] as [Project Manager],[PROJ_SUPR_NM] as [Project Supervisor],FORMAT([pproj_antd_pse_dt],'MM/dd/yyyy') as [PS&E Date],FORMAT([LET_DT],'MM/dd/yyyy') as [LET Date],[region] as [Responsible Region],[worktype] as [WorkType] FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                SelectCommand="SELECT distinct LEFT(FORMAT([budget],'C','en-us'),LEN(FORMAT([budget],'C','en-us')) -3) as [Budget],[MGR_PPROJ_PTCP_NM] as [Project Manager],[PROJ_SUPR_NM] as [Project Supervisor],FORMAT([controllingPSEDt],'MM/dd/yyyy') as [Controlling PS&E Date],FORMAT([LET_DT],'MM/dd/yyyy') as [LET Date],[region] as [Responsible Region],[worktype] as [WorkType] FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
@@ -278,6 +279,7 @@
     <asp:HiddenField ID="Timeline" ClientIDMode="Static" runat="server" Value="" />
     <asp:HiddenField ID="ProjectBudget" ClientIDMode="Static" runat="server" Value="" />
     <asp:HiddenField ID="CurrentUser" ClientIDMode="Static" runat="server" />
+    <asp:HiddenField ID="PSEPosition" ClientIDMode="Static" runat="server" Value="" />
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://rawgithub.com/highcharts/draggable-points/master/draggable-points.js"></script>
     <script>
@@ -338,13 +340,24 @@
                     var rV = 'The value for ' + this.x +
                         ' is $' + Highcharts.numberFormat(this.y, 0);
                     if (prevPoint) {
-                        rV += '; previous y is $' + Highcharts.numberFormat(prevPoint.y, 0);
+                        rV += '; previous quarter is $' + Highcharts.numberFormat(prevPoint.y, 0);
                     }
                     return rV;
                 }
             },
 
             xAxis: {
+                plotLines: [{
+                    color: '#5B6666',
+                    width: 2,
+                    value: $('#PSEPosition').val(),
+                    label: {
+                        text: 'Controlling PS&E',
+                        verticalAlign: 'top',
+                        textAlign: 'left',
+                        rotation: 0
+                    }
+                }],
                 categories: $('#Timeline').val().split(",")
             },
 
