@@ -91,7 +91,7 @@
         }
 
             .flex-child:first-child {
-                margin-right: 20px;
+                margin-right: 50px;
             }
 
         .warning-container {
@@ -173,62 +173,33 @@
                                         </div>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                <%--<asp:TemplateField HeaderText="DDC" SortExpression="RevenueScore">
-                            <ItemTemplate>
-                                <asp:Label runat="server" Text='<%# Bind("Base") %>' ID="revenueLabel"></asp:Label>
-                            </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:Label ID="BaseCurveLabel" runat="server" Text='<%# Bind("Base") %>'></asp:Label>
-                            </EditItemTemplate>
-                        </asp:TemplateField>--%>
                                 <asp:TemplateField HeaderText="Prediction" SortExpression="RevenueScore">
                                     <ItemTemplate>
                                         <asp:Label ID="DollarsLabel" runat="server" Text='<%# Bind("Spend") %>'></asp:Label>
                                         <asp:HiddenField ID="TextBox25" runat="server" Value='<%# Bind("Spend") %>'></asp:HiddenField>
                                     </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <%--<asp:TextBox ID="TextBox2" usersubmitbehavior="false" runat="server" Text='<%# Bind("Spend") %>' Width="100px" Style="text-align: right"></asp:TextBox>--%>
-                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="% Spend" SortExpression="PercentSpend">
                                     <ItemTemplate>
                                         <asp:TextBox ID="TextBox26" usersubmitbehavior="false" runat="server" Text='<%# Bind("PercentSpend") %>' Width="35px" Style="text-align: right"></asp:TextBox>%
-                                <%--<asp:Label ID="PercentLabel" runat="server" Text='<%# Bind("PercentSpend") %>'></asp:Label>%--%>
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="TextBox3" usersubmitbehavior="false" runat="server" Text='<%# Bind("PercentSpend") %>' Width="35px" Style="text-align: right"></asp:TextBox>%
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                <%--<asp:TemplateField HeaderText="Change Management" Visible="false">
-                            <ItemTemplate>
-                                <asp:DropDownList runat="server" ID="CMDropDownList" SelectedValue='<%# Bind("ChangeManagement") %>'>
-                                    <asp:ListItem Value="">No</asp:ListItem>
-                                    <asp:ListItem Value="Yes">Yes</asp:ListItem>
-                                </asp:DropDownList>
-                            </ItemTemplate>
-                        </asp:TemplateField>--%>
-                                <%--<asp:TemplateField HeaderText="Reason" Visible="false">
-                            <ItemTemplate>
-                                <asp:DropDownList runat="server" ID="ReasonDropDownList" SelectedValue='<%# Bind("Reason") %>'>
-                                    <asp:ListItem Value="">---</asp:ListItem>
-                                    <asp:ListItem Value="Staffing/Resources">Staffing/Resources</asp:ListItem>
-                                    <asp:ListItem Value="Complex design">Complex design</asp:ListItem>
-                                    <asp:ListItem Value="Scope Change">Scope Change</asp:ListItem>
-                                    <asp:ListItem Value="Travel">Travel</asp:ListItem>
-                                    <asp:ListItem Value="External Factors">External Factors</asp:ListItem>
-                                    <asp:ListItem Value="Utilities">Utilities</asp:ListItem>
-                                    <asp:ListItem Value="Railroad">Railroad</asp:ListItem>
-                                    <asp:ListItem Value="Environmental">Environmental</asp:ListItem>
-                                </asp:DropDownList>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Note" Visible="false">
-                            <ItemTemplate>
-                                <asp:TextBox ID="noteTextBox" usersubmitbehavior="false" runat="server" Text='<%# Bind("Note") %>' MaxLength="300"></asp:TextBox>
-                            </ItemTemplate>
-                        </asp:TemplateField>--%>
                             </Columns>
                             <PagerSettings Mode="NumericFirstLast"></PagerSettings>
+                        </asp:GridView>
+                    </div>
+                    <div class="flex-child">
+                        <asp:GridView ID="letgridview" runat="server" DataSourceID="letquery" BorderWidth="0" AutoGenerateColumns="false">
+                            <Columns>
+                            <asp:TemplateField headertext="Associated Let's">
+                                <itemtemplate>
+                                    <asp:Label ID="letid" runat="server" Text='<%# Bind("PROJ_ID") %>'></asp:Label>
+                                </itemtemplate>
+                            </asp:TemplateField>
+                                </Columns>
                         </asp:GridView>
                     </div>
                     <div class="flex-child">
@@ -274,6 +245,13 @@
             <asp:SqlDataSource runat="server" ID="SubProjHeader"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
                 SelectCommand="SELECT distinct PPROJ_FOST_TXT as FOST, PPROJ_FOSL_TXT as FOSL, PPROJ_RTNM_TXT as RTNM FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                <SelectParameters>
+                    <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
+                </SelectParameters>
+            </asp:SqlDataSource>
+            <asp:SqlDataSource runat="server" ID="letquery"
+                ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
+                SelectCommand="SELECT [PROJ_ID] FROM [WisDOT-DOBL].[dbo].[LET_IDs] where [DES_GRP_ID] = @ProjectID OR REPLACE([DES_GRP_ID],'-','') = @ProjectID">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>

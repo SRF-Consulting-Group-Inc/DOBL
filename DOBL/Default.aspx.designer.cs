@@ -87,6 +87,15 @@ namespace WebApplication1
         protected global::System.Web.UI.WebControls.GridView GridView1;
 
         /// <summary>
+        /// letgridview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView letgridview;
+
+        /// <summary>
         /// ChangeManagementPlaceholder control.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace WebApplication1
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SubProjHeader;
+
+        /// <summary>
+        /// letquery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource letquery;
 
         /// <summary>
         /// spentData control.
