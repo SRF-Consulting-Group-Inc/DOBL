@@ -104,6 +104,12 @@
             color: orangered;
             font-size: large;
         }
+
+        .highcharts-tooltip-box {
+            fill: lightgrey;
+            fill-opacity: 0.1;
+            stroke-width: 0;
+        }
     </style>
 
     <div id="mySidenav" class="sidenav">
@@ -126,15 +132,6 @@
             <asp:Label ID="Warning" CssClass="warning" runat="server" Text=""></asp:Label>
         </div>
         <asp:GridView ID="HeaderGridView" runat="server" DataSourceID="ProjHeader" CellPadding="4" Style="margin: auto">
-            <Columns>
-                <%-- <asp:BoundField DataField="Budget" HeaderText="Budget" ReadOnly="True" SortExpression="Budget"></asp:BoundField>
-                        <asp:BoundField DataField="Manager" HeaderText="Manager" ReadOnly="True" SortExpression="Manager"></asp:BoundField>
-                        <asp:BoundField DataField="Supervisor" HeaderText="Supervisor" ReadOnly="True" SortExpression="Supervisor"></asp:BoundField>
-                        <asp:BoundField DataField="PS&amp;E Date" HeaderText="PS&amp;E Date" ReadOnly="True" SortExpression="PS&amp;E Date"></asp:BoundField>
-                        <asp:BoundField DataField="LET Date" HeaderText="LET Date" ReadOnly="True" SortExpression="LET Date"></asp:BoundField>
-                        <asp:BoundField DataField="Region" HeaderText="Region" ReadOnly="True" SortExpression="Region"></asp:BoundField>
-                        <asp:BoundField DataField="WorkType" HeaderText="WorkType" ReadOnly="True" SortExpression="WorkType"></asp:BoundField>--%>
-            </Columns>
         </asp:GridView>
         <asp:GridView ID="SubheaderGridView" runat="server" DataSourceID="SubProjHeader" CellPadding="4" Style="margin: auto" />
         <br />
@@ -194,12 +191,12 @@
                     <div class="flex-child">
                         <asp:GridView ID="letgridview" runat="server" DataSourceID="letquery" BorderWidth="0" AutoGenerateColumns="false">
                             <Columns>
-                            <asp:TemplateField headertext="Associated Let's">
-                                <itemtemplate>
-                                    <asp:Label ID="letid" runat="server" Text='<%# Bind("PROJ_ID") %>'></asp:Label>
-                                </itemtemplate>
-                            </asp:TemplateField>
-                                </Columns>
+                                <asp:TemplateField HeaderText="Associated Let's">
+                                    <ItemTemplate>
+                                        <asp:Label ID="letid" runat="server" Text='<%# Bind("PROJ_ID") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
                         </asp:GridView>
                     </div>
                     <div class="flex-child">
@@ -244,7 +241,7 @@
             </asp:SqlDataSource>
             <asp:SqlDataSource runat="server" ID="SubProjHeader"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
-                SelectCommand="SELECT distinct PPROJ_FOST_TXT as FOST, PPROJ_FOSL_TXT as FOSL, PPROJ_RTNM_TXT as RTNM FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                SelectCommand="SELECT distinct PPROJ_RTNM_TXT as Route, PPROJ_FOST_TXT as Title, PPROJ_FOSL_TXT as Limit FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
