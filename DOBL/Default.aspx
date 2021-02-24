@@ -241,7 +241,7 @@
             </asp:SqlDataSource>
             <asp:SqlDataSource runat="server" ID="SubProjHeader"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
-                SelectCommand="SELECT distinct PPROJ_RTNM_TXT as Route, PPROJ_FOST_TXT as Title, PPROJ_FOSL_TXT as Limit FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                SelectCommand="SELECT distinct PPROJ_RTNM_TXT as Route, PPROJ_FOST_TXT as Title, PPROJ_FOSL_TXT as Limit, [PROJ_CNTY_NM] as County FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
@@ -336,7 +336,7 @@
                     label: {
                         text: 'Controlling PS&E',
                         verticalAlign: 'top',
-                        textAlign: 'left',
+                        textAlign: 'right',
                         rotation: 0,
                         style: {
                             color: '#C8C8C8',
