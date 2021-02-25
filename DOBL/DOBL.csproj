@@ -154,7 +154,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
+    <Content Include="Resources.aspx" />
     <Content Include="Account\SignOut.aspx" />
     <Content Include="Calculator.aspx" />
     <Content Include="Contact.aspx" />
@@ -219,12 +219,12 @@
       <DependentUpon>SignOut.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="Resources.aspx.cs">
+      <DependentUpon>Resources.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="Resources.aspx.designer.cs">
+      <DependentUpon>Resources.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StartupAuth.cs" />
