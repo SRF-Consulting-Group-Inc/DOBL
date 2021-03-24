@@ -146,7 +146,7 @@
             <div class="auto-style1">
                 <div class="flex-container">
                     <div class="flex-child">
-                        <asp:GridView ID="GridView1" runat="server" DataKeyNames="PredictionID" AutoGenerateColumns="false" DataSourceID="SqlDataSource1" AllowPaging="True" PageSize="25" BorderWidth="0" GridLines="None" AlternatingRowStyle-BackColor="WhiteSmoke" PagerSettings-Mode="NumericFirstLast">
+                        <asp:GridView ID="GridView1" runat="server" DataKeyNames="PredictionID" AutoGenerateColumns="false" DataSourceID="SqlDataSource1" AllowPaging="True" PageSize="25" BorderWidth="0" GridLines="None" AlternatingRowStyle-BackColor="WhiteSmoke" PagerSettings-Mode="NumericFirstLast" Width="340">
                             <AlternatingRowStyle BackColor="WhiteSmoke"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField HeaderText="Project Number" SortExpression="ProposalNumber">
@@ -200,16 +200,9 @@
                         </asp:GridView>
                     </div>
                     <div class="flex-child">
-                        <asp:Label runat="server" ID="ChangeManagementPlaceholder" Text="No Change Mangement Events"></asp:Label>
-                        <asp:GridView ID="GridView2" runat="server">
+                        <asp:Label runat="server" ID="ChangeManagementPlaceholder" Text="Change Mangement Events"></asp:Label>
+                        <asp:GridView ID="GridView2" runat="server" DataSourceID="changemanagement" Borderwidth="0" GridLines="Horizontal" MaxWidth="580px">
                             <AlternatingRowStyle BackColor="WhiteSmoke"></AlternatingRowStyle>
-                            <Columns>
-                                <asp:TemplateField HeaderText="Change Management Event">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='No events yet' ID="ChangeManagementDate"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
                         </asp:GridView>
                     </div>
                 </div>
@@ -234,14 +227,14 @@
             </asp:SqlDataSource>
             <asp:SqlDataSource runat="server" ID="ProjHeader"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
-                SelectCommand="SELECT distinct LEFT(FORMAT([budget],'C','en-us'),LEN(FORMAT([budget],'C','en-us')) -3) as [Budget],[MGR_PPROJ_PTCP_NM] as [Project Manager],[PROJ_SUPR_NM] as [Project Supervisor],FORMAT([controllingPSEDt],'MM/dd/yyyy') as [Controlling PS&E Date],FORMAT([LET_DT],'MM/dd/yyyy') as [LET Date],[region] as [Responsible Region],[worktype] as [WorkType] FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                SelectCommand="SELECT distinct PPROJ_RTNM_TXT as Route, [PROJ_CNTY_NM] as County, PPROJ_FOST_TXT as Title, PPROJ_FOSL_TXT as Limit, [worktype] as [WorkType] FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
             </asp:SqlDataSource>
             <asp:SqlDataSource runat="server" ID="SubProjHeader"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
-                SelectCommand="SELECT distinct PPROJ_RTNM_TXT as Route, PPROJ_FOST_TXT as Title, PPROJ_FOSL_TXT as Limit, [PROJ_CNTY_NM] as County FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
+                SelectCommand="SELECT distinct [region] as [Responsible Region],[PROJ_SUPR_NM] as [Supervisor],[MGR_PPROJ_PTCP_NM] as [Project Manager],FORMAT([controllingPSEDt],'MM/dd/yyyy') as [Controlling PS&E Date],FORMAT([LET_DT],'MM/dd/yyyy') as [LET Date], LEFT(FORMAT([budget],'C','en-us'),LEN(FORMAT([budget],'C','en-us')) -3) as [Delivery Budget] FROM [WisDOT-DOBL].[dbo].[v_Tableau] where [Project ID] = @ProjectID OR REPLACE([Project ID],'-','') = @ProjectID">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
@@ -249,6 +242,13 @@
             <asp:SqlDataSource runat="server" ID="letquery"
                 ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
                 SelectCommand="SELECT [PROJ_ID] FROM [WisDOT-DOBL].[dbo].[LET_IDs] where [DES_GRP_ID] = @ProjectID OR REPLACE([DES_GRP_ID],'-','') = @ProjectID">
+                <SelectParameters>
+                    <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
+                </SelectParameters>
+            </asp:SqlDataSource>
+            <asp:SqlDataSource runat="server" ID="changemanagement"
+                ConnectionString='<%$ ConnectionStrings:DOBLCurveAdjustment %>'
+                SelectCommand="SELECT [ESTCP_TXT_DESC] as 'Description',[ESTCP_TY_CD] as 'Code',format([Change],'C','en-us') as 'Change',format([NEW_VAL_ESTCP_EST_AMT],'C','en-us') as 'New_Value',format([DateTime_Out], 'MM/dd/yy') as 'Change_Date' FROM [WisDOT-DOBL].[dbo].[ChangeManagement] where [PROJECTID] = @ProjectID OR REPLACE([PROJECTID],'-','') = @ProjectID Order by [DateTime_Out] Desc">
                 <SelectParameters>
                     <asp:ControlParameter Name="ProjectID" ControlID="SearchBox" PropertyName="Text" ConvertEmptyStringToNull="true" />
                 </SelectParameters>
