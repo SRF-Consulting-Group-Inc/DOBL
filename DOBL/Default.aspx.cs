@@ -13,7 +13,17 @@ namespace WebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string project = SearchBox.Text;
+            string getRequest = Request.QueryString["project"];
+            string project;
+            if (getRequest != null && !Page.IsPostBack)
+            {
+                project = getRequest;
+                SearchBox.Text = getRequest;
+            }
+            else
+            {
+                project = SearchBox.Text;
+            }
             if (!project.Contains("-") && project.Length >= 8) { project = project.Substring(0, 4) + '-' + project.Substring(4, 2) + '-' + project.Substring(6, 2); }
             Load_graph(project);
             Load_last_updated(project);
