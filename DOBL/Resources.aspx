@@ -8,6 +8,6 @@
         If you hit submit without making any changes you will accept the default curve.
     </p>
     <h3>Tableau Dashboard</h3>
-    <p><a href="https://devdoaenterprisebi.wi.gov">Here is a link to the current management dashboard.</a></p>
+    <p><a target="_blank" href="https://devdoaenterprisebi.wi.gov">Here is a link to the current management dashboard.</a></p>
     <%--<p>If you don't have tableau reader installed <a href="https://www.tableau.com/products/reader/download" target="_blank">here is a link to the most recent version.</a></p>--%>
 </asp:Content>
